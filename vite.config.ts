@@ -55,6 +55,13 @@ export default defineConfig({
   },
   server: {
     open: false,
-    port: 8888
+    port: 8888,
+    proxy: {
+      "/api": {
+        target: 'http://127.0.0.1:12345/',//
+        changeOrigin: true, 
+        rewrite: (path) => path.replace(/^\/api/,""),
+      },
+    },
   }
 })

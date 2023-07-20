@@ -5,6 +5,7 @@ import { userStore } from '../stores/user'
 import BreadCrumb from './BreadCrumb.vue'
 import { Fold, ArrowRightBold } from '@element-plus/icons-vue'
 import type { Layout } from 'types/layout'
+import { removeCookie } from '@/utils'
 
 const sidebarRelated = inject<Layout.SidebarRelated>('sidebarRelated')
 const loading = inject<Layout.Loading>('loading')
@@ -13,9 +14,10 @@ const router = useRouter()
 
 function logout() {
   if (loading) loading.logout = true
-  user.logout().then(_ => {
-    router.replace('/login')
-  })
+  removeCookie('token')
+  //user.logout().then(_ => {
+  router.replace('/login')
+  //})
 }
 </script>
 

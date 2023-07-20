@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { transitions } from '@/appConfig'
-import { reactive } from 'vue'
+import { reactive , ref} from 'vue'
 import { randomPick } from '@/utils'
+import { userStore } from '@/stores/user';
 
 const dialogs = reactive({
   dialog1: {
@@ -21,6 +22,20 @@ function showDialog(transition: transitions) {
     dialogs.dialog1.loading = false
   }, 2000)
 }
+const cols = [
+  {title: '样例序号', dataIndex: 'id', key: 'id', width: 50 },
+{ title: '评测结果', dataIndex: 'result', key: 'result', width: 100 },
+{ title: '执行用时(ms)', dataIndex: 'time', key: 'time', width: 100 },
+{ title: '内存用量(MB)', dataIndex: 'memory', key: 'memory', width: 100 },
+{ title: '评测信息', dataIndex: 'info', key: 'info', width: 200 },
+]
+const patientDt = ref<any[]>([])
+const user = userStore()
+user.getScores(0).then((result)=>{
+  console.log(result)
+  patientDt.value = result
+})
+
 </script>
 
 <template>
@@ -52,13 +67,33 @@ function showDialog(transition: transitions) {
         <ElButton type="primary" @click="dialogs.dialog1.show = false">确定</ElButton>
       </template>
     </Dialog>
-    <ElButton @click="showDialog(randomPick(Object.values(transitions)))">随机模态框</ElButton>
+    <!--ElButton @click="showDialog(randomPick(Object.values(transitions)))">随机模态框</ElButton>
     <ElButton @click="showDialog(transitions.fade)">fade模态框</ElButton>
     <ElButton @click="showDialog(transitions.fadeScale)">fade-scale模态框</ElButton>
     <ElButton @click="showDialog(transitions.slideUp)">slide-up模态框</ElButton>
     <ElButton @click="showDialog(transitions.slideDown)">slide-down模态框</ElButton>
     <ElButton @click="showDialog(transitions.slideLeft)">slide-left模态框</ElButton>
-    <ElButton @click="showDialog(transitions.slideRight)">slide-right模态框</ElButton>
+    <ElButton @click="showDialog(transitions.slideRight)">slide-right模态框</ElButton-->
+      <span>
+        评测结果
+      </span>
+      <ElTable
+      :data="patientDt"
+      style="width: 100%"
+    >
+      <ElTableColumn :type="'selection'" :minWidth="55" />
+      <ElTableColumn
+        v-for="column in cols"
+        :key="column.dataIndex"
+        :label="column.title"
+        :minWidth="column.width"
+        :prop="column.key"
+        :sortable="true"
+      />
+    </ElTable>
+      <span>
+
+      </span>
   </div>
 </template>
 

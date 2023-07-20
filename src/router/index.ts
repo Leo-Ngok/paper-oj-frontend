@@ -61,16 +61,30 @@ const routes: RouteRecordRaw[] = [
         path: 'index',
         name: 'ModalIndex',
         component: () => import('@/views/modal.vue'),
-        meta: { title: '模态框', icon: Connection, askBeforeCloseTab: true }
+        meta: { title: '平台评测信息', icon: Connection, askBeforeCloseTab: true }
+      }
+    ]
+  },{
+    path: '/rankings',
+    name: 'Rankings',
+    component: Layout,
+    redirect: '/rankings/index',
+    meta: { breadcrumb: false },
+    children: [
+      {
+        path: 'index',
+        name: 'RankingsIndex',
+        component: () => import('@/views/rankings.vue'),
+        meta: { title: '排行榜', icon: Connection, askBeforeCloseTab: true }
       }
     ]
   },
-  {
+  /*{
     path: '/https://github.com/1esse/vue-clownfish-admin-elem',
     component: undefined,
     redirect: 'https://github.com/1esse/vue-clownfish-admin-elem',
     meta: { title: 'github', external: true, icon: Link }
-  }
+  }*/
 ]
 
 function markRawWrap(routes: RouteRecordRaw[]) {
@@ -89,5 +103,7 @@ const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: markRawWrap([dashboardRoute, ...routes, ...constantRoutes])
 })
+const _routes_ = markRawWrap([dashboardRoute, ...routes, ...constantRoutes]);
+export { _routes_ }
 
 export default router

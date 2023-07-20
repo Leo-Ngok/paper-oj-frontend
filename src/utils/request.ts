@@ -3,7 +3,7 @@ import axios from 'axios'
 import { getCookie } from '.'
 
 const request = axios.create({
-  baseURL: import.meta.env.VITE_APP_BASE_API,
+  baseURL: '/api',//import.meta.env.VITE_APP_BASE_API,
   withCredentials: true,
   timeout: 60000
 })
@@ -25,7 +25,7 @@ request.interceptors.request.use(
 
 request.interceptors.response.use(
   response => {
-    const { code, msg } = response.data
+    /*const { code, msg } = response.data
     if (code !== 200) {
       ElMessage({
         message: `错误码${code}：${msg || '未知错误'}`,
@@ -33,7 +33,7 @@ request.interceptors.response.use(
         duration: 5 * 1000
       })
       return Promise.reject(new Error(msg || '未知错误'))
-    } else {
+    } else*/ {
       return response.data
     }
   },

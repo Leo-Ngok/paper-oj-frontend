@@ -5,7 +5,7 @@ import { appTitle } from './appConfig'
 import { getCookie, removeCookie } from './utils'
 import { userStore } from './stores/user'
 import { ElMessage } from 'element-plus'
-
+import initUser from './utils/initUser'
 NProgress.configure({ showSpinner: false })
 
 const whitelist: string[] = ['/login', '/404']
@@ -20,19 +20,24 @@ router.beforeEach(async (to, from, next) => {
   if (whitelist.includes(to.path)) next()
   else {
     // 判断是否有token
+
     const token = getCookie('token')
     const user = userStore()
+    initUser.setUser(user)
+    initUser.setRouter(router)
     if (!token) {
       next('/login')
     } else if (!user.token) {
-      try {
+      //initUser.initPages()
+      /*try {
         await user.getUserInfo(token)
         next()
       } catch (_) {
         ElMessage.error('token失效，请重新登录')
         removeCookie('token') // 清除cookie
         next('/login')
-      }
+      }*/
+      next()
     } else {
       next()
     }

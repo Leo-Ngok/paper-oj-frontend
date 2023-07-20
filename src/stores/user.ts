@@ -4,6 +4,16 @@ import request from "@/utils/request"
 import { ElMessage } from "element-plus"
 import { Stores } from "types/stores"
 
+import Layout from '@/layout/index.vue'
+
+import { Component } from 'vue'
+
+import { _routes_ } from '@/router'
+import { RouteRecordRaw, Router } from 'vue-router'
+import currRoutes from './currRoutes'
+import { Job } from "@/presets/userData"
+let _router: Router
+
 export const userStore = defineStore('user', {
   state: (): Stores.user => ({
     name: '',
@@ -12,9 +22,16 @@ export const userStore = defineStore('user', {
     token: ''
   }),
   actions: {
+   
     async login(username: string, password: string) {
-      return new Promise((resolve, reject) => {
-        request.post<Stores.user>('/user/login', {
+      
+      this.name = 'li_tiansuo'//data.name
+      this.age = 24//data.age
+      this.sex = 'male' //data.sex
+      this.token = `${username}Token`
+      setCookie('token', this.token)
+      //return new Promise((resolve, reject) => {
+        /*request.post<Stores.user>('/user/login', {
           username, password
         }).then(res => {
           const { data, msg } = res
@@ -29,7 +46,7 @@ export const userStore = defineStore('user', {
             reject(msg)
           }
         })
-      })
+      })*/
     },
     async logout() {
       return new Promise((resolve) => {
@@ -59,6 +76,23 @@ export const userStore = defineStore('user', {
           } else {
             reject(msg)
           }
+        })
+      })
+    },
+    async getScores(judge_id: number) : Promise<Job> {
+      return new Promise((resolve, reject) => {
+        request.get('/jobs/0').then((result)=> {
+          console.log(result)
+          //resolve()
+          resolve(result.cases)
+        })
+      })
+    },
+    async getRankings() : Promise<any> {
+      return new Promise((resolve, reject) => {
+        request.get('/contests/0/ranklist').then((result)=>{
+          console.log(result)
+          resolve(result)
         })
       })
     }

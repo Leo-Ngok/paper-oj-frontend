@@ -1,4 +1,19 @@
 <script setup lang="ts">
+
+
+import { userStore } from '@/stores/user';
+import { useRouter } from 'vue-router';
+import initUser from '@/utils/initUser';
+
+const router = useRouter()
+const user = userStore()
+try {
+  initUser.setRouter(router)
+  initUser.setUser(user)
+  initUser.initPages()
+} catch(error) {
+  console.log(error)
+}
 </script>
 
 <template>

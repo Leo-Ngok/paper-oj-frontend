@@ -3,12 +3,12 @@ import { EnvType, SwitchType } from "types/app"
 /**
  * app标题
  */
-export const appTitle = 'Clownfish Admin'
+export const appTitle = 'Rust OJ'
 
 /**
  * 使用mock代理api请求：on开，off关  
  */
-export const mock: SwitchType = 'on'
+export const mock: SwitchType = 'off'//'on'
 
 /**
  * mock是否开启namespace，开启后文件名将作为前缀拼接在url

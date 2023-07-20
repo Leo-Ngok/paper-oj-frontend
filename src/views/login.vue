@@ -30,15 +30,18 @@ const user = userStore()
 
 function login() {
   if (!refForm.value) return
+  //router.replace('/dashboard')
   refForm.value.validate((valid, fields) => {
-    if (!valid) return false
+    //if (!valid) return false
     loading.login = true
-    user.login(form.username, form.password).then(_ => {
+    user.login(form.username, form.password)
+    router.replace('/dashboard')
+    /*user.login(form.username, form.password).then(_ => {
       router.replace('/dashboard')
     }).catch(err => {
       loading.login = false
       ElMessage.error(err)
-    })
+    })*/
   })
 }
 </script>
